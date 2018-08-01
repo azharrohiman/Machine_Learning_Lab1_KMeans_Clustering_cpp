@@ -18,7 +18,7 @@ namespace RHMMUH005 {
 	}
 
 	// default constructor
-	Point::Point(float x, float y) {
+	Point::Point(double x, double y) {
 		Point::x = x;
 		Point::y = y;
 	}
@@ -27,5 +27,6 @@ namespace RHMMUH005 {
 	Point::~Point() {
 		
 	}
+
 };
 

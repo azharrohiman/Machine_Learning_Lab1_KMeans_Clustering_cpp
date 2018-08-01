@@ -17,10 +17,10 @@ namespace RHMMUH005 {
 		public: // public members
 
 			Point();
-			Point(float, float);
+			Point(double, double);
 			~Point();
 
-			float x, y;
+			double x, y;
 
 	};
 }
