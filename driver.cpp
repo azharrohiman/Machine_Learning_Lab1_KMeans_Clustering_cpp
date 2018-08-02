@@ -17,20 +17,15 @@ struct Points {
 
 double distance(RHMMUH005::Point& point1, RHMMUH005::Point point2) {
 
-	//cout << std::fixed;
-	//cout << std::setprecision(1);
-
 	double x = point1.x - point2.x;
 	double y = point1.y - point2.y;
 
 	double dist = pow(x, 2) + pow(y, 2);
-	//cout << dist << endl;
+
 	return sqrt(dist);
 };
 
 Point calculateMeanPoint(vector<Point> group) {
-	//cout << std::fixed;
-	//cout << std::setprecision(1);
 
 	double x = 0;
 	double y = 0;
@@ -39,7 +34,6 @@ Point calculateMeanPoint(vector<Point> group) {
 		x = x + group.at(i).x;
 		y = y + group.at(i).y;
 	}
-	//cout << x/group.size() << endl;
 
 	Point mean;
 	if (group.size() != 0) {
@@ -51,8 +45,6 @@ Point calculateMeanPoint(vector<Point> group) {
 }
 
 bool compareMeans(vector<Point> group, Point points) {
-	//cout << std::fixed;
-	//cout << std::setprecision(1);
 
 	double x = 0;
 	double y = 0;
@@ -67,8 +59,6 @@ bool compareMeans(vector<Point> group, Point points) {
 		y = y/group.size();
 	}
 
-	//cout << x << " and " << points.x << " " << y << " and " << points.y << endl;
-
 	if (x == points.x && y == points.y) {
 		return false;
 	}
@@ -80,17 +70,16 @@ bool compareMeans(vector<Point> group, Point points) {
 
 int main(int argc, char* argv[]) {
 
+	cout << "K-means clustering process running. Check output.txt file" << endl;
 	cout << std::fixed;
 	cout << std::setprecision(1);
 
 	char comma;
 	bool k_mean_iteration = true;
 
-	//vector<Points> point;
 	vector<Point> point;
 	Point coords;
 
-	//vector<Cluster> clusters;
 	vector<Point> clusters;
 
 	vector<double> cluster1Distances;
@@ -102,6 +91,8 @@ int main(int argc, char* argv[]) {
 	vector<Point> group_three;
 
 	ifstream file("input");
+	ofstream output_file;
+	output_file.open("output.txt");
 
 	while (file >> coords.id >> coords.x >> comma >> coords.y) {
 		point.push_back(coords);
@@ -114,7 +105,7 @@ int main(int argc, char* argv[]) {
 	int iteration = 0;
 
 	while (k_mean_iteration) {
-		cout << "Iteration : " << ++iteration << endl;
+		output_file << "Iteration: " << ++iteration << endl << endl;
 
 		for (int i = 0; i < clusters.size(); i++) {
 			for (int j = 0; j < point.size(); j++) {
@@ -152,47 +143,53 @@ int main(int argc, char* argv[]) {
 			}
 		}
 
-		cout << "Cluster 1: ";
+		output_file << "Cluster 1: ";
 		for (int i = 0; i < group_one.size(); i++) {
 			if (i == group_one.size() - 1) {
-				cout << group_one.at(i).id;
+				output_file << group_one.at(i).id;
 			}
 			else {
-				cout << group_one.at(i).id << ", ";
+				output_file << group_one.at(i).id << ", ";
 			}
 		}
 
-		cout << endl;
-		cout << "Centroid: (" << clusters.at(0).x << ", " << clusters.at(0).y << ")" << endl;
-		cout << endl;
+		output_file << endl;
 
-		cout << "Cluster 2: ";
+		output_file << "Centroid: (" << clusters.at(0).x << ", " << clusters.at(0).y << ")" << endl;
+
+		output_file << endl;
+
+		output_file << "Cluster 2: ";
 		for (int i = 0; i < group_two.size(); i++) {
 			if (i == group_two.size() - 1) {
-				cout << group_two.at(i).id;
+				output_file << group_two.at(i).id;
 			}
 			else {
-				cout << group_two.at(i).id << ", ";
+				output_file << group_two.at(i).id << ", ";
 			}
 		}
 
-		cout << endl;
-		cout << "Centroid: (" << clusters.at(1).x << ", " << clusters.at(1).y << ")" << endl;
-		cout << endl;
+		output_file << endl;
 
-		cout << "Cluster 3: ";
+		output_file << "Centroid: (" << clusters.at(1).x << ", " << clusters.at(1).y << ")" << endl;
+
+		output_file << endl;
+
+		output_file << "Cluster 3: ";
 		for (int i = 0; i < group_three.size(); i++) {
 			if (i == group_three.size() - 1) {
-				cout << group_three.at(i).id;
+				output_file << group_three.at(i).id;
 			}
 			else {
-				cout << group_three.at(i).id << ", ";
+				output_file << group_three.at(i).id << ", ";
 			}
 		}
 
-		cout << endl;
-		cout << "Centroid: (" << clusters.at(2).x << ", " << clusters.at(2).y << ")" << endl;
-		cout << endl;
+		output_file << endl;
+
+		output_file << "Centroid: (" << clusters.at(2).x << ", " << clusters.at(2).y << ")" << endl;
+
+		output_file << endl;
 
 		if (compareMeans(group_one, clusters.at(0)) || compareMeans(group_two, clusters.at(1)) || compareMeans(group_three, clusters.at(2))) {
 
@@ -213,13 +210,6 @@ int main(int argc, char* argv[]) {
 		else {
 			k_mean_iteration = false;
 		}
-		
-		/*
-		for (int i = 0; i < clusters.size(); i++) {
-			cout << clusters.at(i).x << " " << clusters.at(i).y << endl;
-		}
-		cout << endl;
-		*/
 
 	}
 
