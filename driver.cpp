@@ -5,7 +5,6 @@
 #include <iomanip>
 #include <vector>
 #include <math.h>
-#include <map>
 #include "Point.h"
 #include "Cluster.h"
 
@@ -25,6 +24,7 @@ double distance(RHMMUH005::Point& point1, RHMMUH005::Point point2) {
 	double y = point1.y - point2.y;
 
 	double dist = pow(x, 2) + pow(y, 2);
+	//cout << dist << endl;
 	return sqrt(dist);
 };
 
@@ -32,8 +32,8 @@ Point calculateMeanPoint(vector<Point> group) {
 	//cout << std::fixed;
 	//cout << std::setprecision(1);
 
-	double x;
-	double y;
+	double x = 0;
+	double y = 0;
 
 	for (int i = 0; i < group.size(); i++) {
 		x = x + group.at(i).x;
@@ -42,8 +42,10 @@ Point calculateMeanPoint(vector<Point> group) {
 	//cout << x/group.size() << endl;
 
 	Point mean;
-	mean.x = x/group.size();
-	mean.y = y/group.size();
+	if (group.size() != 0) {
+		mean.x = x/group.size();
+		mean.y = y/group.size();
+	}
 
 	return mean;
 }
@@ -52,16 +54,18 @@ bool compareMeans(vector<Point> group, Point points) {
 	//cout << std::fixed;
 	//cout << std::setprecision(1);
 
-	double x;
-	double y;
+	double x = 0;
+	double y = 0;
 
 	for (int i = 0; i < group.size(); i++) {
 		x = x + group.at(i).x;
 		y = y + group.at(i).y;
 	}
 
-	x = x/group.size();
-	y = y/group.size();
+	if (group.size() != 0) {
+		x = x/group.size();
+		y = y/group.size();
+	}
 
 	//cout << x << " and " << points.x << " " << y << " and " << points.y << endl;
 
@@ -103,33 +107,23 @@ int main(int argc, char* argv[]) {
 		point.push_back(coords);
 	}
 
-	/*
-	clusters.push_back(Cluster(point.at(0), 1));
-	clusters.push_back(Cluster(point.at(3), 2));
-	clusters.push_back(Cluster(point.at(6), 3));
-	*/
-
 	clusters.push_back(point.at(0));
 	clusters.push_back(point.at(3));
 	clusters.push_back(point.at(6));
 
-	//int count = 0;
 	while (k_mean_iteration) {
 
 		for (int i = 0; i < clusters.size(); i++) {
 			for (int j = 0; j < point.size(); j++) {
 				if (i == 0) {
-					//cluster1Distances.push_back(distance(point.at(j), clusters.at(i).getPoints()));
 					cluster1Distances.push_back(distance(point.at(j), clusters.at(i)));
 				}
 
 				if (i == 1) {
-					//cluster2Distances.push_back(distance(point.at(j), clusters.at(i).getPoints()));
 					cluster2Distances.push_back(distance(point.at(j), clusters.at(i)));
 				}
 
 				if (i == 2) {
-					//cluster3Distances.push_back(distance(point.at(j), clusters.at(i).getPoints()));
 					cluster3Distances.push_back(distance(point.at(j), clusters.at(i)));
 				}
 			}
@@ -169,7 +163,6 @@ int main(int argc, char* argv[]) {
 			group_one.clear();
 			group_two.clear();
 			group_three.clear();
-			//count = count + 1;
 		}
 
 		else {
@@ -178,7 +171,6 @@ int main(int argc, char* argv[]) {
 		
 
 		for (int i = 0; i < clusters.size(); i++) {
-			//cout << clusters.size() << endl;
 			cout << clusters.at(i).x << " " << clusters.at(i).y << endl;
 		}
 		cout << endl;
