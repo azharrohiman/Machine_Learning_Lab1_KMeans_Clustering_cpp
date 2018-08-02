@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
 
 	ifstream file("input");
 
-	while (file >> coords.x >> comma >> coords.y) {
+	while (file >> coords.id >> coords.x >> comma >> coords.y) {
 		point.push_back(coords);
 	}
 
@@ -111,7 +111,10 @@ int main(int argc, char* argv[]) {
 	clusters.push_back(point.at(3));
 	clusters.push_back(point.at(6));
 
+	int iteration = 0;
+
 	while (k_mean_iteration) {
+		cout << "Iteration : " << ++iteration << endl;
 
 		for (int i = 0; i < clusters.size(); i++) {
 			for (int j = 0; j < point.size(); j++) {
@@ -149,6 +152,48 @@ int main(int argc, char* argv[]) {
 			}
 		}
 
+		cout << "Cluster 1: ";
+		for (int i = 0; i < group_one.size(); i++) {
+			if (i == group_one.size() - 1) {
+				cout << group_one.at(i).id;
+			}
+			else {
+				cout << group_one.at(i).id << ", ";
+			}
+		}
+
+		cout << endl;
+		cout << "Centroid: (" << clusters.at(0).x << ", " << clusters.at(0).y << ")" << endl;
+		cout << endl;
+
+		cout << "Cluster 2: ";
+		for (int i = 0; i < group_two.size(); i++) {
+			if (i == group_two.size() - 1) {
+				cout << group_two.at(i).id;
+			}
+			else {
+				cout << group_two.at(i).id << ", ";
+			}
+		}
+
+		cout << endl;
+		cout << "Centroid: (" << clusters.at(1).x << ", " << clusters.at(1).y << ")" << endl;
+		cout << endl;
+
+		cout << "Cluster 3: ";
+		for (int i = 0; i < group_three.size(); i++) {
+			if (i == group_three.size() - 1) {
+				cout << group_three.at(i).id;
+			}
+			else {
+				cout << group_three.at(i).id << ", ";
+			}
+		}
+
+		cout << endl;
+		cout << "Centroid: (" << clusters.at(2).x << ", " << clusters.at(2).y << ")" << endl;
+		cout << endl;
+
 		if (compareMeans(group_one, clusters.at(0)) || compareMeans(group_two, clusters.at(1)) || compareMeans(group_three, clusters.at(2))) {
 
 			clusters.clear();
@@ -169,11 +214,12 @@ int main(int argc, char* argv[]) {
 			k_mean_iteration = false;
 		}
 		
-
+		/*
 		for (int i = 0; i < clusters.size(); i++) {
 			cout << clusters.at(i).x << " " << clusters.at(i).y << endl;
 		}
 		cout << endl;
+		*/
 
 	}
 

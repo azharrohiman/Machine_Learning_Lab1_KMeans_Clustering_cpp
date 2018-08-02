@@ -18,9 +18,10 @@ namespace RHMMUH005 {
 	}
 
 	// default constructor
-	Point::Point(double x, double y) {
+	Point::Point(double x, double y, int id) {
 		Point::x = x;
 		Point::y = y;
+		Point::id = id;
 	}
 
 	// destructor
